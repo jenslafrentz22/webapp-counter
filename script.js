@@ -1,20 +1,32 @@
+const label = document.querySelector("label"); // wird verändert
+const main = document.querySelector("main");
+const button = document.querySelector("button");
 let counter = 0;
 let colorCounter = 0;
-const label = document.querySelector("label");
 
 function increaseCounter() {
   counter++;
-  label.innerText = counter;
+  label.innerText = counter; // <label>Text</label> wird hochgezählt
 
   colorCounter++;
   if (colorCounter === 101) {
-    colorCounter = 1;
+    colorCounter = 1; // Counter zurücksetzen für Farbbalken
   }
   main.style.setProperty("--counter", colorCounter + "%");
 }
-const main = document.querySelector("main");
+
+// wenn ein Key (Enter oder " " (Space)) gedrückt wird:
+document.addEventListener("keypress", function (e) {
+  if (["Enter", " "].includes(e.key)) {
+    increaseCounter();
+  }
+});
+
+// wenn Main (weißer Bereich) geklickt wird:
 main.addEventListener("click", increaseCounter);
 
+// wenn Reset gedrückt wird:
+button.addEventListener("click", resetCounter);
 function resetCounter() {
   counter = 0;
   colorCounter = 0;
@@ -22,12 +34,3 @@ function resetCounter() {
   main.style.setProperty("--counter", 0 + "%");
   button.blur();
 }
-const button = document.querySelector("button");
-button.addEventListener("click", resetCounter);
-
-document.addEventListener("keypress", function (e) {
-  console.log(e.key);
-  if (["Enter", " "].includes(e.key)) {
-    increaseCounter();
-  }
-});
